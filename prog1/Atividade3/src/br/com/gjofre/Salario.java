@@ -1,56 +1,34 @@
 package br.com.gjofre;
 
-import java.util.ArrayList;
-
 public class Salario {
 
 	private SalarioFamilia salarioFamilia = new SalarioFamilia();
-	private double salario;
-	private double salarioTotal;
+	private double valorBase;
 	
-	public Salario(double salario, int qtdDependentes) {
-		this.salario = salario;
+	public Salario(double valorBase, int qtdDependentes) {
+		this.valorBase  = valorBase;
 		salarioFamilia.setQuantidadeDependentes(qtdDependentes); 
 	}
 
-	public double getSalario() {
-		return salario;
+	public double getValorBase() {
+		return valorBase;
 	}
 
-	public void setSalario(double salario) {
-		this.salario = salario;
-	}
-	
-	public SalarioFamilia getSalarioFamilia() {
-		return salarioFamilia;
+	public void setSalario(double valorBase) {
+		this.valorBase = valorBase;
 	}
 
-	public double getSalarioTotal() {
-		return salarioTotal;
+	private double calcularSalarioBruto() {
+		double valor = salarioFamilia.calcularSalarioFamilia(); 
+		return valor > 0.0 ? (getValorBase() + valor) * (1 + 0.03) : getValorBase();			
 	}
-
-	public void setSalarioTotal(double salarioTotal) {
-		this.salarioTotal = salarioTotal;
-	}
-	
-	private void calcularSalarioTotal() {
-		double salarioTotal = getSalario() + salarioFamilia.getValorSalarioFamilia();
-		setSalarioTotal(salarioTotal);
-	}
-	
-	public void calcularValoresSalario() {
-		salarioFamilia.calcularPercentualAcrescimo();
-		salarioFamilia.calcularSalarioFamilia();
-		calcularSalarioTotal();
-	}	
-	
 	
 	@Override
 	public String toString() {
-		return "Salário: " + getSalario() + "\n" +
+		return "Salário: " + getValorBase() + "\n" +
 				"Quantidade de dependentes: " + salarioFamilia.getQuantidadeDependentes() + "\n" +
-				"Tota do salário família: " + salarioFamilia.getValorSalarioFamilia() + "\n" +
-				"Salário final: " + getSalarioTotal() + "\n" +
+				"Tota do salário família: " + salarioFamilia.calcularSalarioFamilia() + "\n" +
+				"Salário final: " + calcularSalarioBruto() + "\n" +
 				"-------------" + "\n";
 	}
 }
