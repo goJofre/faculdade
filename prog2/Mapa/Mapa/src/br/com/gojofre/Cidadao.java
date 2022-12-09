@@ -33,7 +33,7 @@ public class Cidadao extends Pessoa {
 				dataAtual.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
 		if (p.getYears() > 0)
-			return false;
+			return true;
 		if (p.getMonths() < 4)
 			return false;
 
